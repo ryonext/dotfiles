@@ -1,0 +1,175 @@
+export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
+# PROMPT
+RPROMPT="%T"                      # 右側に時間を表示する
+
+setopt transient_rprompt  # 右側まで入力がきたら時間を消す
+setopt prompt_subst       # 便利なプロント
+setopt autopushd                  # cdの履歴を表示
+setopt pushd_ignore_dups  # 同ディレクトリを履歴に追加しない
+setopt list_packed        # リストを詰めて表示
+setopt list_types         # 補完一覧ファイル種別表示
+
+#ruby
+eval "$(rbenv init -)"
+
+#補完
+autoload -U compinit
+compinit -u
+
+#文字コード
+export LANG=ja_JP.UTF-8
+
+#履歴
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt share_history
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+#bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+
+#cd省略
+setopt auto_cd
+
+#ターミナルのタイトルにホスト名を出す
+case "${TERM}" in
+  kterm*|xterm)
+    precmd() {
+      echo -ne "\033]0;${USER}@${HOST}\007"
+    }
+    ;;
+esac
+
+#色の設定
+export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+
+export SVN_EDITOR=vim
+[ -f ~/.bundler-exec.sh ] && source ~/.bundler-exec.sh
+#vimでgvimを起動
+
+# Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+#git
+
+#ctags
+
+#ls and git s
+function do_enter() {
+    if [ -n "$BUFFER" ]; then
+        zle accept-line
+        return 0
+    fi
+    echo
+    ls
+    # ↓おすすめ
+    # ls_abbrev
+    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+        echo
+        echo -e "\e[0;33m--- git status ---\e[0m"
+        git status -sb
+    fi
+    zle reset-prompt
+    return 0
+}
+zle -N do_enter
+bindkey '^m' do_enter
+
+# alias
+if [ -f /usr/local/bin/brew ]; then
+  alias ctags="`brew --prefix`/bin/ctags"
+fi
+if [ -f /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  alias vi='env LANG=ja_JP.UTF-8 /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+  alias vim='env LANG=ja_JP.UTF-8 /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+fi
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '(%s)-[%b]'
+zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+
+#current directory
+autoload colors
+colors
+local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
+PROMPT="%f$HOSTCOLOR% ${HOST} %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
+   [%n]$ "
+
+# Remove all .orig files
+alias rmorig='rm **/*.orig'
+alias rakedb='rake db:migrate && rake db:test:clone'
+
+export EDITOR=vim
+alias rakedbreborn='rake db:drop && rake db:create && rake db:migrate && rake db:seed && rake db:test:clone'
+
+# peco
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^p' peco-select-history
+
+#alias bundle='bundle install --binstubs=.bin'
+export PATH=./.bin:$PATH
+
+export PATH=~/.local/bin:$PATH
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+export PATH=$PATH:$HOME/.gvm/bin
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
+# alias
+alias be='bundle exec'
+alias g=git
+alias ls="ls -G"
+alias sz="source ~/.zshrc"
+alias vbrew="vim ~/Dropbox/dotfiles/brewfile"
+alias vg='vagrant'
+alias vi=vim
+alias vimrc="vim ~/.vimrc"
+alias zshrc="vim ~/.zshrc"
+
+# golang
+export PATH=$HOME/go/bin:$PATH
+export GOPATH=$HOME/go
+
+# Java
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export M2_HOME="/opt/apache-maven/"
+export MAVEN_OPTS="-Xmx512m"
+export PATH=$PATH:/opt/apache-maven/bin
+
+# Node.js
+NODEBREW_HOME=~/.nodebrew/current
+export NODEBREW_HOME
+export NODEBREW_ROOT=/usr/local/var/nodebrew
+export PATH=$PATH:$NODEBREW_HOME/bin
+
+# Python
+export PATH=~/Library/Python/2.7/bin:$PATH
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# local
+[ -f ./local_zshrc ] && . ./local_zshrc
+
+source aws_zsh_completer.sh
