@@ -1,4 +1,3 @@
-export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
 # PROMPT
 RPROMPT="%T"                      # 右側に時間を表示する
 
@@ -129,10 +128,6 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^p' peco-select-history
 
-#alias bundle='bundle install --binstubs=.bin'
-export PATH=./.bin:$PATH
-
-export PATH=~/.local/bin:$PATH
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 export PATH=$PATH:$HOME/.gvm/bin
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
