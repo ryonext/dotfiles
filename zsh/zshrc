@@ -8,9 +8,6 @@ setopt pushd_ignore_dups  # 同ディレクトリを履歴に追加しない
 setopt list_packed        # リストを詰めて表示
 setopt list_types         # 補完一覧ファイル種別表示
 
-#ruby
-eval "$(rbenv init -)"
-
 #補完
 autoload -U compinit
 compinit -u
@@ -143,7 +140,7 @@ alias vi=vim
 alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
 
-# golang
+# Golang
 export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
 
@@ -163,6 +160,9 @@ export PATH=$PATH:$NODEBREW_HOME/bin
 export PATH=~/Library/Python/2.7/bin:$PATH
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# Ruby
+eval "$(rbenv init -)"
 
 # local
 [ -f ./local_zshrc ] && . ./local_zshrc
