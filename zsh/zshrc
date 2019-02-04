@@ -101,12 +101,8 @@ local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
 PROMPT="%f$HOSTCOLOR% ${HOST} %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
    [%n]$ "
 
-# Remove all .orig files
-alias rmorig='rm **/*.orig'
-alias rakedb='rake db:migrate && rake db:test:clone'
 
 export EDITOR=vim
-alias rakedbreborn='rake db:drop && rake db:create && rake db:migrate && rake db:seed && rake db:test:clone'
 
 # peco
 function peco-select-history() {
@@ -133,6 +129,8 @@ export PATH=$PATH:$HOME/.gvm/bin
 alias be='bundle exec'
 alias g=git
 alias ls="ls -G"
+alias rakedb='rake db:migrate && rake db:test:clone'
+alias rmorig='rm **/*.orig'
 alias sz="source ~/.zshrc"
 alias vbrew="vim ~/Dropbox/dotfiles/brewfile"
 alias vg='vagrant'
