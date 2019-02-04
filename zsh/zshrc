@@ -43,9 +43,7 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-export SVN_EDITOR=vim
 [ -f ~/.bundler-exec.sh ] && source ~/.bundler-exec.sh
-#vimでgvimを起動
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -79,10 +77,6 @@ bindkey '^m' do_enter
 if [ -f /usr/local/bin/brew ]; then
   alias ctags="`brew --prefix`/bin/ctags"
 fi
-if [ -f /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim ]; then
-  alias vi='env LANG=ja_JP.UTF-8 /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-  alias vim='env LANG=ja_JP.UTF-8 /Users/ryonext/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-fi
 
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%s)-[%b]'
@@ -93,16 +87,12 @@ precmd () {
     [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
 
-
 #current directory
 autoload colors
 colors
 local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
 PROMPT="%f$HOSTCOLOR% ${HOST} %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
    [%n]$ "
-
-
-export EDITOR=vim
 
 # peco
 function peco-select-history() {
@@ -120,10 +110,6 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^p' peco-select-history
-
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-export PATH=$PATH:$HOME/.gvm/bin
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # alias
 alias be='bundle exec'
