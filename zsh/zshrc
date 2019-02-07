@@ -1,7 +1,18 @@
 # PROMPT
-RPROMPT="%T"                      # 右側に時間を表示する
+autoload colors
+colors
+local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
+PROMPT="%f$HOSTCOLOR% ${HOST}(%T) %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
+[%n]$ "
+## display hostname
+case "${TERM}" in
+  kterm*|xterm)
+    precmd() {
+      echo -ne "\033]0;${USER}@${HOST}\007"
+    }
+    ;;
+esac
 
-setopt transient_rprompt  # 右側まで入力がきたら時間を消す
 setopt prompt_subst       # 便利なプロント
 setopt autopushd                  # cdの履歴を表示
 setopt pushd_ignore_dups  # 同ディレクトリを履歴に追加しない
@@ -30,13 +41,6 @@ bindkey "^N" history-beginning-search-forward-end
 setopt auto_cd
 
 #ターミナルのタイトルにホスト名を出す
-case "${TERM}" in
-  kterm*|xterm)
-    precmd() {
-      echo -ne "\033]0;${USER}@${HOST}\007"
-    }
-    ;;
-esac
 
 #色の設定
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
@@ -88,11 +92,6 @@ precmd () {
 }
 
 #current directory
-autoload colors
-colors
-local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
-PROMPT="%f$HOSTCOLOR% ${HOST} %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
-   [%n]$ "
 
 # peco
 function peco-select-history() {
