@@ -55,17 +55,10 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
-#cd省略
-setopt auto_cd
-
-#ターミナルのタイトルにホスト名を出す
-
 #色の設定
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-
-[ -f ~/.bundler-exec.sh ] && source ~/.bundler-exec.sh
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
