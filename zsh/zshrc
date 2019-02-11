@@ -132,10 +132,12 @@ export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
 
 # Java
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-export M2_HOME="/opt/apache-maven/"
-export MAVEN_OPTS="-Xmx512m"
-export PATH=$PATH:/opt/apache-maven/bin
+if [ -f /usr/libexec/java_home ]; then
+  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+  export M2_HOME="/opt/apache-maven/"
+  export MAVEN_OPTS="-Xmx512m"
+  export PATH=$PATH:/opt/apache-maven/bin
+fi
 
 # Node.js
 NODEBREW_HOME=~/.nodebrew/current
@@ -144,12 +146,16 @@ export NODEBREW_ROOT=/usr/local/var/nodebrew
 export PATH=$PATH:$NODEBREW_HOME/bin
 
 # Python
-export PATH=~/Library/Python/2.7/bin:$PATH
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+if [ -e ~/Library/Python/2.7/bin ]; then
+  export PATH=~/Library/Python/2.7/bin:$PATH
+  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+  if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+fi
 
 # Ruby
-eval "$(rbenv init -)"
+if [ -e /usr/local/bin/rbenv ]; then
+  eval "$(rbenv init -)"
+fi
 
 # local
 [ -f ./local_zshrc ] && . ./local_zshrc
