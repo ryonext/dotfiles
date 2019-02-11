@@ -4,7 +4,15 @@ export PATH=$PATH:~/bin
 # PROMPT
 autoload colors
 colors
-local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|md5|cut -c1-2))"'m%}'
+case ${OSTYPE} in
+  darwin*)
+    md5command=md5
+    ;;
+  linux*)
+    md5command=md5sum
+    ;;
+esac
+local HOSTCOLOR=$'%{\e[38;5;'"$(printf "%d\n" 0x$(hostname|$md5command|cut -c1-2))"'m%}'
 PROMPT="%f$HOSTCOLOR% ${HOST}(%T) %{${fg[yellow]}%}%~%{${reset_color}%}"%1(v|%F{green}%1v%f|)"
 [%n]$ "
 ## display hostname
