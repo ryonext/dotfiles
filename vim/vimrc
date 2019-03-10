@@ -1,5 +1,4 @@
 if has('vim_starting')
-  set nocompatible "vi互換不要
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 call neobundle#begin(expand('~/.vim/bundle'))
