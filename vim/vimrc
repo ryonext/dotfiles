@@ -1,0 +1,76 @@
+if has('vim_starting')
+  set nocompatible "vi互換不要
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand('~/.vim/bundle'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleCheck
+"プラグイン
+NeoBundle 'Shougo/unite.vim' "ファイラ
+NeoBundle 'ujihisa/unite-colorscheme' "カラースキーマのプレビュー
+NeoBundle 'kien/ctrlp.vim' "ctrl+pによるファイルの絞込
+NeoBundle 'tomasr/molokai' "カラースキーマ
+NeoBundle 'scrooloose/nerdtree' "ファイル一覧
+NeoBundle 'kchmck/vim-coffee-script' "CoffeeScript
+NeoBundle 'nathanaelkane/vim-indent-guides' "インデントに色を付ける
+NeoBundle 'tpope/vim-endwise' "if~endの自動挿入
+NeoBundle 'slim-template/vim-slim'
+NeoBundle 'rhysd/vim-color-splatoon'
+NeoBundle "elixir-lang/vim-elixir" 
+call neobundle#end()
+
+filetype plugin indent on
+
+"画面表示
+set cmdheight=2 "メッセージ表示欄を２行に
+set cursorcolumn "カーソル位置のカラムの背景色を変える
+set cursorline "カーソル行背景色を変える
+set helpheight=999 "ヘルプを画面いっぱいに開く
+set laststatus=2 "常にステータスラインを表示
+set list "不可視文字の表示
+set listchars=eol:↲
+set number "行番号表示
+set showmatch "括弧の対応をハイライト
+syntax on "シンタックスハイライトon
+
+"カーソル移動関連
+set backspace=indent,eol,start "バックスペースでなんでも消せるように
+set scrolloff=8 "スクロール時の余白確保
+set sidescrolloff=16 "横スクロール時の余白確保
+set whichwrap=b,s,h,l,<,>,[,] "カーソルを行頭、行末で止まらないようにする
+
+"ファイル関連
+set autoread "他で書き換えられたら自動で読み直す
+set hidden "編集中でも他のファイルを開けるようにする
+set nobackup "バックアップ取らない
+set noswapfile "スワップファイル作らない
+
+" 検索／置換
+set hlsearch "検索文字をハイライト
+set ignorecase "大文字小文字無視
+set incsearch "インクリメンタルサーチ
+set smartcase "大文字ではじめたら大文字小文字無視しない
+set wrapscan "最後まで検索したら先頭へ戻る
+
+" タブ/インデント
+set autoindent "前行のインデントを継承
+set expandtab "tab をスペースに展開
+set shiftwidth=2 "自動インデントの幅
+set tabstop=2 "タブ文字の幅
+
+"動作環境
+set clipboard=unnamed,autoselect "yankとclipboardの連携
+" autocmd BufWritePre * :%s/\s\+$//ge " 行末スペースの削除
+"set iminsert=2 "インサートモードから抜けると自動的にIMEをオフ
+
+noremap <C-n> :NERDTree ./ <Enter> "ctrl-nでnerdtreeを開く
+colorscheme molokai "カラースキーマを設定
+
+au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee "CoffeeScriptを認識させる
+noremap <C-i> :Unite buffer<CR> " バッファ一覧
+
+"Golang
+if $GOROOT != ''
+  set rtp+=$GOROOT/misc/vim
+endif
+set ambiwidth=double
