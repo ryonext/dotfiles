@@ -18,8 +18,6 @@ NeoBundle 'rhysd/vim-color-splatoon'
 NeoBundle "elixir-lang/vim-elixir" 
 call neobundle#end()
 
-filetype plugin indent on
-
 "画面表示
 set cmdheight=2 "メッセージ表示欄を２行に
 set cursorcolumn "カーソル位置のカラムの背景色を変える
@@ -33,12 +31,13 @@ set showmatch "括弧の対応をハイライト
 syntax on "シンタックスハイライトon
 
 "カーソル移動関連
-set backspace=indent,eol,start "バックスペースでなんでも消せるように
+"set backspace=indent,eol,start "バックスペースでなんでも消せるように
+set whichwrap=b,s,h,l,<,>,[,] "カーソルを行頭、行末で止まらないようにする
 set scrolloff=8 "スクロール時の余白確保
 set sidescrolloff=16 "横スクロール時の余白確保
-set whichwrap=b,s,h,l,<,>,[,] "カーソルを行頭、行末で止まらないようにする
 
 "ファイル関連
+filetype plugin indent on "ファイルを開いた問に、ファイルタイプ用のプラグインとインデントを有効化する
 set autoread "他で書き換えられたら自動で読み直す
 set hidden "編集中でも他のファイルを開けるようにする
 set nobackup "バックアップ取らない
