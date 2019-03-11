@@ -27,7 +27,7 @@ set cursorline "カーソル行背景色を変える
 set helpheight=999 "ヘルプを画面いっぱいに開く
 set laststatus=2 "常にステータスラインを表示
 set list "不可視文字の表示
-set listchars=eol:↲
+set listchars=eol:\ 
 set number "行番号表示
 set showmatch "括弧の対応をハイライト
 syntax on "シンタックスハイライトon
