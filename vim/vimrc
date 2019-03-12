@@ -28,6 +28,7 @@ set list "不可視文字の表示
 set listchars=eol:\ 
 set number "行番号表示
 set showmatch "括弧の対応をハイライト
+set ambiwidth=double "■記号などを正しく表示する
 syntax on "シンタックスハイライトon
 
 "カーソル移動関連
@@ -57,18 +58,7 @@ set shiftwidth=2 "自動インデントの幅
 set tabstop=2 "タブ文字の幅
 
 "動作環境
-set clipboard=unnamed,autoselect "yankとclipboardの連携
-" autocmd BufWritePre * :%s/\s\+$//ge " 行末スペースの削除
-"set iminsert=2 "インサートモードから抜けると自動的にIMEをオフ
-
-noremap <C-n> :NERDTree ./ <Enter> "ctrl-nでnerdtreeを開く
+set clipboard=unnamed "yankとclipboardの連携
 colorscheme molokai "カラースキーマを設定
-
-au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee "CoffeeScriptを認識させる
+noremap <C-n> :NERDTree ./ <Enter> "ctrl-nでnerdtreeを開く
 noremap <C-i> :Unite buffer<CR> " バッファ一覧
-
-"Golang
-if $GOROOT != ''
-  set rtp+=$GOROOT/misc/vim
-endif
-set ambiwidth=double
