@@ -32,7 +32,7 @@ set ambiwidth=double "■記号などを正しく表示する
 syntax on "シンタックスハイライトon
 
 "カーソル移動関連
-"set backspace=indent,eol,start "バックスペースでなんでも消せるように
+set backspace=indent,eol,start "バックスペースでなんでも消せるように
 set whichwrap=b,s,h,l,<,>,[,] "カーソルを行頭、行末で止まらないようにする
 set scrolloff=8 "スクロール時の余白確保
 set sidescrolloff=16 "横スクロール時の余白確保
@@ -58,7 +58,7 @@ set shiftwidth=2 "自動インデントの幅
 set tabstop=2 "タブ文字の幅
 
 "動作環境
-set clipboard=unnamed "yankとclipboardの連携
+set clipboard+=unnamed "yankとclipboardの連携
 colorscheme molokai "カラースキーマを設定
 noremap <C-n> :NERDTree ./ <Enter> "ctrl-nでnerdtreeを開く
 noremap <C-i> :Unite buffer<CR> " バッファ一覧

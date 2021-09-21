@@ -1,5 +1,5 @@
 export LANG=ja_JP.UTF-8
-export PATH=$PATH:~/bin
+export PATH=~/bin:$PATH
 
 # PROMPT
 autoload colors
@@ -139,15 +139,14 @@ if [ -f /usr/libexec/java_home ]; then
   export PATH=$PATH:/opt/apache-maven/bin
 fi
 
-# Node.js
-NODEBREW_HOME=~/.nodebrew/current
-export NODEBREW_HOME
-export NODEBREW_ROOT=/usr/local/var/nodebrew
-export PATH=$PATH:$NODEBREW_HOME/bin
-
 # Python
 if [ -e ~/Library/Python/2.7/bin ]; then
   export PATH=~/Library/Python/2.7/bin:$PATH
+  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+  if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+fi
+if [ -e ~/Library/Python/3.7/bin ]; then
+  export PATH=~/Library/Python/3.7/bin:$PATH
   if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
   if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 fi
